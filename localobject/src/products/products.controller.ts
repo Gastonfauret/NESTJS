@@ -31,3 +31,5 @@ export class ProductsController {
         this.productsService.delete(id);
     }
 }
+
+//Pagina 71 - Pipes
