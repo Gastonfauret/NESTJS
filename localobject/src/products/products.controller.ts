@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
 import { Product } from './interfaces/products/product.interface';
 import { ProductsService } from './products.service';
+import { ProductDto } from './dto/product.dto/product.dto';
+import { ProductPatchDto } from './dto/product-patch.dto/product-patch.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -10,19 +12,24 @@ export class ProductsController {
         return this.productsService.getAll();
     }
     @Get(':id')
-    find(@Param('id') id: number) {
+    async find(@Param('id', ParseIntPipe) id: number) {
         return this.productsService.getId(id);
     }
+
     @Post()
-    @HttpCode(HttpStatus.NO_CONTENT)
-    createProduct(
-        @Body() body,
+    createProduct(@Body() productDto: ProductDto
     ) {
-        this.productsService.insert(body);
+        this.productsService.insert(productDto);
     }
+
     @Post(':id')
-    update(@Param('id') id: number, @Body() body) {
+    async update(@Param('id', new ParseIntPipe({errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE})) id: number, @Body() body) {
         return this.productsService.update(id, body);
+    }
+
+    @Patch()
+    async patch(@Param('id', ParseIntPipe) id: number, @Body() body: ProductPatchDto) {
+        return this.productsService.patch(id, body)
     }
 
     @Delete(':id')
@@ -32,4 +39,4 @@ export class ProductsController {
     }
 }
 
-//Pagina 71 - Pipes
+//Pagina 86 - VAlidaciones Avanzadas en Nest

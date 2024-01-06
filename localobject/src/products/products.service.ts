@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from './interfaces/products/product.interface';
+import { ProductPatchDto } from './dto/product-patch.dto/product-patch.dto';
 @Injectable()
 export class ProductsService {
     private products: Product[] = [
@@ -44,6 +45,12 @@ export class ProductsService {
         this.products = this.products.map((item: Product) => {
             return item.id == id ? product : item;
         });
+    }
+
+    patch(id: number, body: ProductPatchDto) {
+        const previousProduct = this.getId(id);
+        const product: Product = {...previousProduct, ...body}
+        this.products = this.products.map((item: Product) => {return item.id == id ? product: item})
     }
 
     delete(id: number) {
