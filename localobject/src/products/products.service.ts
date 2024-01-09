@@ -48,9 +48,14 @@ export class ProductsService {
     }
 
     patch(id: number, body: ProductPatchDto) {
-        const previousProduct = this.getId(id);
-        const product: Product = {...previousProduct, ...body}
-        this.products = this.products.map((item: Product) => {return item.id == id ? product: item})
+        let previousProduct = this.getId(id);
+        let product: Product = {
+            ...previousProduct,
+            ...body
+        }
+        this.products = this.products.map((item: Product) => {
+            return item.id == id ? product : item;
+        });
     }
 
     delete(id: number) {

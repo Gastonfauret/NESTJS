@@ -1,6 +1,7 @@
 import { Get, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Tag, stock } from '../tags/tag/tag.interface';
 import { NotFoundException } from '@nestjs/common';
+import { TagDto } from './dto/tag.dto/tag.dto';
 
 @Injectable()
 export class TagsService {
@@ -60,17 +61,18 @@ export class TagsService {
         }
     }
 
-    insert(body: any) {
-        this.productTag = [
-            ...this.productTag, {
-                id: this.productTag.length + 1,
-                item: body.item,
-                type: body.type,
-                code: body.code,
-                brand: body.brand,
-                stock: body.stock
-            }
-        ]
+    insert(body: TagDto): Tag {
+        const newTag: Tag = {
+            id: this.productTag.length + 1,
+            item: body.item,
+            type: body.type,
+            code: body.code,
+            brand: body.brand,
+            stock: body.stock
+        };
+
+        this.productTag = [...this.productTag, newTag];
+        return newTag; 
     }
 
     update(id: number, body: any) {
@@ -82,7 +84,7 @@ export class TagsService {
             brand: body.brand,
             stock: body.stock
         }
-        this.productTag = this.productTag.map((item: Tag) => {return item.id == id ? tagProduct : item})
+        this.productTag = this.productTag.map((item: Tag) => { return item.id == id ? tagProduct : item })
     }
 
     delete(id: number) {

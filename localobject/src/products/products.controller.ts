@@ -11,25 +11,28 @@ export class ProductsController {
     getAllProducts(): Product[] {
         return this.productsService.getAll();
     }
+
     @Get(':id')
     async find(@Param('id', ParseIntPipe) id: number) {
         return this.productsService.getId(id);
     }
 
     @Post()
-    createProduct(@Body() productDto: ProductDto
-    ) {
+    createProduct(@Body() productDto: ProductDto) {
         this.productsService.insert(productDto);
     }
 
     @Post(':id')
-    async update(@Param('id', new ParseIntPipe({errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE})) id: number, @Body() body) {
+    async update(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number, @Body() body) {
         return this.productsService.update(id, body);
     }
 
-    @Patch()
-    async patch(@Param('id', ParseIntPipe) id: number, @Body() body: ProductPatchDto) {
-        return this.productsService.patch(id, body)
+    @Patch(':id')
+    async patch(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() body: ProductPatchDto,
+    ) {
+        return this.productsService.patch(id, body);
     }
 
     @Delete(':id')
