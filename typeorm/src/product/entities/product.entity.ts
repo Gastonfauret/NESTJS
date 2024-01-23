@@ -1,17 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Review } from "../../review/entities/review.entity";
 
-@Entity()
-export class Products {
+@Entity('products')
+export class Product {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column()
+    @Column('varchar', { length: 50 })
     name: string;
 
-    @Column()
+    @Column('varchar', { length: 250 })
     description: string;
 
-    @Column()
+    @Column('int', { width: 3 })
     stock: number;
+
+    @OneToMany(() => Review, review => review.product)
+    reviews: Review[];
 }

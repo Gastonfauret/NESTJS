@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Products } from './entities/product.entity';
+import { Product } from './entities/product.entity';
 
 
 @Module({
@@ -13,17 +13,16 @@ import { Products } from './entities/product.entity';
     username: 'root',
     password: '32067437',
     database: 'product',
-    entities: [Products],
+    entities: [Product],
     autoLoadEntities: true,
     synchronize: true
   }),
-  TypeOrmModule.forFeature([Products]),
+  TypeOrmModule.forFeature([Product]),
   ],
   controllers: [ProductController],
   providers: [ProductService],
   exports: [TypeOrmModule]
 })
 
-export class AppModule { }
+export class ProductModule { }
 
-//Page 99 - Sincronizar las entidades con tablas de la base de datos
