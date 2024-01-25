@@ -3,6 +3,9 @@ import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
+import { Review } from 'src/review/entities/review.entity';
+import { ReviewController } from 'src/review/review.controller';
+import { ReviewsService } from 'src/review/review.service';
 
 
 @Module({
@@ -17,10 +20,10 @@ import { Product } from './entities/product.entity';
     autoLoadEntities: true,
     synchronize: true
   }),
-  TypeOrmModule.forFeature([Product]),
+  TypeOrmModule.forFeature([Product, Review]),
   ],
-  controllers: [ProductController],
-  providers: [ProductService],
+  controllers: [ProductController, ReviewController],
+  providers: [ProductService, ReviewsService],
   exports: [TypeOrmModule]
 })
 

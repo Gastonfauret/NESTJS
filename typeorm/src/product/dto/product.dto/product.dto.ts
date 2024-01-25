@@ -12,6 +12,6 @@ export class ProductDto {
     stock: number;
 }
 
-// Page 110 - Cómo usar TypeORM para guardar las relaciones.
+
 
 
