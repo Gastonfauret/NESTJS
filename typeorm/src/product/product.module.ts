@@ -6,6 +6,7 @@ import { Product } from './entities/product.entity';
 import { Review } from 'src/review/entities/review.entity';
 import { ReviewController } from 'src/review/review.controller';
 import { ReviewsService } from 'src/review/review.service';
+import { Size } from './entities/size.entity';
 
 
 @Module({
@@ -20,7 +21,7 @@ import { ReviewsService } from 'src/review/review.service';
     autoLoadEntities: true,
     synchronize: true
   }),
-  TypeOrmModule.forFeature([Product, Review]),
+  TypeOrmModule.forFeature([Product, Review, Size]),
   ],
   controllers: [ProductController, ReviewController],
   providers: [ProductService, ReviewsService],

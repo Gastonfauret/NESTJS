@@ -1,4 +1,4 @@
-import { IsInt, IsString, Min } from "class-validator";
+import { IsInt, IsString, Min, IsArray } from "class-validator";
 
 export class ProductDto {
     @IsString({message:"El campo 'name' debe ser un String"})
@@ -10,6 +10,10 @@ export class ProductDto {
     @IsInt({message:"El campo 'stock' debe ser un numero entero"})
     @Min(0, {message:"El stock debe ser 0 o un valor mayor"})
     stock: number;
+
+    @IsString({each: true})
+    @IsArray()
+    sizes: string[];
 }
 
 
